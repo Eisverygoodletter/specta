@@ -15,9 +15,18 @@ pub struct TypeTwo {
     pub my_field: String,
 }
 
+#[derive(Type)]
+pub struct TypeThree {
+    pub entity_id: bevy_ecs::entity::Entity,
+}
+
 fn main() {
     // This will automatically discover all types in your project!
-    export::ts("./bindings.ts").unwrap();
+    export::ts_with_cfg(
+        "./bindings.ts",
+        &ExportConfiguration::default().bigint(BigIntExportBehavior::Number),
+    )
+    .unwrap();
 
     // You can also override the export configuration.
     export::ts_with_cfg(

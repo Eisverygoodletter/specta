@@ -19,5 +19,8 @@ node_modules
 *.tsbuildinfo
 /packages/*/dist
 
+# vscode settings
+/.vscode/**
+
 /bindings.ts
 /bindings2.ts

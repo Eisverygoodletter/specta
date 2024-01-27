@@ -85,6 +85,8 @@ glam = ["dep:glam"]
 tokio = ["dep:tokio"]
 ## [url](https://docs.rs/url) crate
 url = ["dep:url"]
+## [bevy_ecs](https://docs.rs/bevy_ecs/latest/bevy_ecs/) crate
+bevy_ecs = ["dep:bevy_ecs"]
 
 [dependencies]
 specta-macros = { version = "1.0.5", path = "./macros" }
@@ -107,6 +109,7 @@ bytesize = { version = "1.1.0", optional = true, default-features = false, featu
 glam = { version = "0.22", optional = true, default-features = false, features = ["std"] }
 tokio = { version = "1.25", optional = true, default-features = false, features = ["sync"] }
 url = { version = "2.3.1", optional = true, default-features = false }
+bevy_ecs = { version = "0.12.1", optional = true }
 paste = "1.0.9"
 document-features = "0.2.6"
 ctor = { version = "0.1.26", optional = true }

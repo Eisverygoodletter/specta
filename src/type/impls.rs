@@ -20,6 +20,60 @@ const _: () = {
     use tokio::sync::{Mutex, RwLock};
     impl_containers!(Mutex RwLock);
 };
+#[cfg(feature = "bevy_ecs")]
+const _: () = {
+    use crate::PrimitiveType::usize;
+    impl Type for bevy_ecs::component::ComponentId {
+        fn inline(_opts: DefOpts, _generics: &[DataType]) -> Result<DataType, ExportError> {
+            Ok(DataType::Named(
+                TupleType {
+                    fields: vec![DataType::Primitive(usize)],
+                    generics: vec![],
+                }
+                .to_named("ComponentId"),
+            ))
+        }
+    }
+    impl Type for bevy_ecs::entity::Entity {
+        fn inline(_opts: DefOpts, _generics: &[DataType]) -> Result<DataType, ExportError> {
+            Ok(DataType::Named(NamedDataType {
+                name: "Entity",
+                sid: None,
+                impl_location: None,
+                comments: &[],
+                export: None,
+                deprecated: None,
+                item: NamedDataTypeItem::Object(ObjectType {
+                    generics: vec![],
+                    fields: vec![
+                        ObjectField {
+                            flatten: false,
+                            optional: false,
+                            ty: DataType::Primitive(PrimitiveType::u32),
+                            key: "generation",
+                        },
+                        ObjectField {
+                            flatten: false,
+                            optional: false,
+                            ty: DataType::Primitive(PrimitiveType::u32),
+                            key: "index",
+                        },
+                    ],
+                    tag: None,
+                }),
+            }))
+        }
+    }
+    // impl_containers!(ComponentId);
+    // impl_as!(
+    //     ComponentId as usize
+    // );
+    // impl Type for Entity {
+    //     fn inline(opts: DefOpts, generics: &[DataType]) -> Result<DataType, ExportError> {
+    //         Ok(DataType::Record(()))
+    //     }
+    // }
+};
 
 impl<'a> Type for &'a str {
     fn inline(opts: DefOpts, generics: &[DataType]) -> Result<DataType, ExportError> {
@@ -357,6 +411,4 @@ const _: () = {
 };
 
 #[cfg(feature = "url")]
-impl_as!(
-    url::Url as String
-);
+impl_as!(url::Url as String);
